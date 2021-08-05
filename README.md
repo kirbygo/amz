@@ -1,2 +1,2 @@
-# amz
-INEGI price analysis
+# INEGI prices
+INEGI price cleaning
