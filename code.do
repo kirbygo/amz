@@ -269,6 +269,7 @@ gen double idcitsubcgenconsec = idcity*100000000000 + idsubclass*100000000 + idg
 *When an ID changes in time
 gen statusnum = 0
 replace statusnum = 1 if status=="DESENCADENADO"
+* Watch out, this is not perfect. Some products are unchained but still the same
 
 *Grup by new products
 gen perro = statusnum
@@ -304,6 +305,12 @@ drop _merge
 
 * We remove products that are not able to be found online
 gen malo = strpos(description,"GRANEL")
+drop if malo>0
+drop malo
+gen malo = strpos(description,"SERVICIO")
+drop if malo>0
+drop malo
+gen malo = strpos(description,"REVELADO")
 drop if malo>0
 drop malo
 
@@ -426,6 +433,8 @@ replace nueva = subinstr(nueva,"PAQUETE","PAQ",20)
 replace nueva = subinstr(nueva,"PIEZAS","PZ",20)
 replace nueva = subinstr(nueva,"PIEZA","PZ",20)
 replace nueva = subinstr(nueva,"PZS","PZ",20)
+replace nueva = subinstr(nueva,"PZAS","PZ",20)
+replace nueva = subinstr(nueva,"PZA","PZ",20)
 replace nueva = subinstr(nueva,"LITROS","LT",20)
 replace nueva = subinstr(nueva,"LITRO","LT",20)
 replace nueva = subinstr(nueva,"(","",20)
@@ -454,41 +463,380 @@ replace nueva = subinstr(nueva,">","",20)
 replace nueva = subinstr(nueva,"Ñ","N",20)
 replace nueva = subinstr(nueva," ,",",",20)
 replace nueva = subinstr(nueva,"LTS","LT",20)
-replace nueva = subinstr(nueva,",","",20)
 replace nueva = subinstr(nueva,".","",20)
 replace nueva = subinstr(nueva,"%","",20)
+replace nueva = subinstr(nueva,"Ð","N",20)
+replace nueva = subinstr(nueva,"+","",20)
+replace nueva = subinstr(nueva,`"""',"",20)
+replace nueva = subinstr(nueva,"@","",20)
+replace nueva = subinstr(nueva,"&","",20)
+
+*replace nueva = subinstr(nueva,",","",20)
+
+replace nueva = subinstr(nueva,"C1","1",20)
+replace nueva = subinstr(nueva,"C2","2",20)
+replace nueva = subinstr(nueva,"C3","3",20)
+replace nueva = subinstr(nueva,"C4","4",20)
+replace nueva = subinstr(nueva,"C5","5",20)
+replace nueva = subinstr(nueva,"C6","6",20)
+replace nueva = subinstr(nueva,"C7","7",20)
+replace nueva = subinstr(nueva,"C8","8",20)
+replace nueva = subinstr(nueva,"C9","9",20)
+replace nueva = subinstr(nueva,"C0","0",20)
+replace nueva = subinstr(nueva,"C 1","1",20)
+replace nueva = subinstr(nueva,"C 2","2",20)
+replace nueva = subinstr(nueva,"C 3","3",20)
+replace nueva = subinstr(nueva,"C 4","4",20)
+replace nueva = subinstr(nueva,"C 5","5",20)
+replace nueva = subinstr(nueva,"C 6","6",20)
+replace nueva = subinstr(nueva,"C 7","7",20)
+replace nueva = subinstr(nueva,"C 8","8",20)
+replace nueva = subinstr(nueva,"C 9","9",20)
+replace nueva = subinstr(nueva,"C 0","0",20)
 
 replace nueva = subinstr(nueva,"CORTE SINTETICO","COR SINT",20)
 replace nueva = subinstr(nueva,"SUELA SINTETICA","SUE SINT",20)
 replace nueva = subinstr(nueva,"CORTE PIEL","COR PIEL",20)
 replace nueva = subinstr(nueva,"ZAPATOS","ZAP",20)
 replace nueva = subinstr(nueva,"ZAPATO","ZAP",20)
-replace nueva = subinstr(nueva,"PANUELOS DESECHABLES","PAN DESECH",20)
-replace nueva = subinstr(nueva,"SANDALIAS","SAND",20)
+replace nueva = subinstr(nueva,"PANUELOS DESECHABLES","PAN DES",20)
+replace nueva = subinstr(nueva,"SANDALIAS","SAN",20)
 replace nueva = subinstr(nueva,"SANDALIA","SAN",20)
 replace nueva = subinstr(nueva,"COCA COLA","COCACOLA",20)
-replace nueva = subinstr(nueva,"TOSTADAS ONDULADAS","TOSTADAS",20)
+replace nueva = subinstr(nueva,"ONDULADAS","",20)
 replace nueva = subinstr(nueva,"E PURA","EPURA",20)
 replace nueva = subinstr(nueva,"ULTRADESLIZANTE","",20)
 replace nueva = subinstr(nueva,"MODELO","MOD",20)
 replace nueva = subinstr(nueva,"VARIOS","",20)
 replace nueva = subinstr(nueva,"POLIESTER","POL",20)
-replace nueva = subinstr(nueva," &","&",20)
-replace nueva = subinstr(nueva,"& ","&",20)
 replace nueva = subinstr(nueva,"POLIESTE","POL",20)
 replace nueva = subinstr(nueva,"ACCESORIOS","ACC",20)
 replace nueva = subinstr(nueva,"ELASTANO","ELA",20)
 replace nueva = subinstr(nueva,"PULGADAS","",20)
+replace nueva = subinstr(nueva,"PULGS","",20)
+replace nueva = subinstr(nueva,"PULG","",20)
+replace nueva = subinstr(nueva,"A PARTIR DE LOS","",20)
+replace nueva = subinstr(nueva,"A PARTIR DE","",20)
+replace nueva = subinword(nueva,"DE","",20)
+replace nueva = subinstr(nueva,"PAPEL HIGIENICO","PAPEL",20)
+replace nueva = subinstr(nueva,"JUEGOS","JGO",20)
+replace nueva = subinstr(nueva,"JUEGO","JGO",20)
+replace nueva = subinstr(nueva,"DIDACTICO","",20)
+replace nueva = subinstr(nueva,"BOTELLAS","BOT",20)
+replace nueva = subinstr(nueva,"PAÐUELOS DESECHABLES","PAN DES",20)
+replace nueva = subinword(nueva,"HOJAS","H",20)
+replace nueva = subinstr(nueva,"ACABADO","",20)
+replace nueva = subinstr(nueva,"FORJADO","",20)
+replace nueva = subinword(nueva,"HOJA","H",20)
+replace nueva = subinword(nueva,"HOJ","H",20)
+replace nueva = subinword(nueva,"HO","H",20)
+replace nueva = subinstr(nueva,"ESMERILADO","",20)
+replace nueva = subinstr(nueva,"SUAVIZANTE","SUAV",20)
+replace nueva = subinstr(nueva,"MAQUILLAJE","MAQ",20)
+replace nueva = subinstr(nueva,"MESES","M",20)
+replace nueva = subinstr(nueva,"IMPRESION DIGITAL","IMP DIG",20)
+replace nueva = subinstr(nueva,"PAPEL","PAP",20)
+replace nueva = subinstr(nueva,"FOTOGRAFIA","FOTO",20)
+replace nueva = subinstr(nueva,"TRADICIONAL","TRAD",20)
+replace nueva = subinstr(nueva,"BOLSAS","BOL",20)
+replace nueva = subinstr(nueva,"BOLSA","BOL",20)
+replace nueva = subinstr(nueva,"BOTELLA","BOT",20)
+replace nueva = subinstr(nueva,"RETORNABLE","RET",20)
+replace nueva = subinstr(nueva,"ROLLOS","ROL",20)
+replace nueva = subinstr(nueva,"ROLLO","ROL",20)
+replace nueva = subinstr(nueva,"DIFERENTES","DIF",20)
+replace nueva = subinstr(nueva,"DIFERENTE","DIF",20)
+replace nueva = subinword(nueva,"PARA","",20)
+replace nueva = subinstr(nueva,"AEROSOL","AER",20)
+replace nueva = subinstr(nueva,"ULTRAPASTEURIZADA","",20)
+replace nueva = subinstr(nueva,"PASTEURIZADA","",20)
+replace nueva = subinstr(nueva,"DESLACTOZADA","DESLAC",20)
+replace nueva = subinstr(nueva,"ENVASES","",20)
+replace nueva = subinstr(nueva,"ENVASE","",20)
+replace nueva = subinstr(nueva,"CONCENTRADO","CONC",20)
+replace nueva = subinstr(nueva,"WALT DISNEY","WALTDISNEY",20)
+replace nueva = subinstr(nueva,"BLU RAY","BLURAY",20)
+replace nueva = subinstr(nueva,"EN POLVO","POL",20)
+replace nueva = subinstr(nueva,"POLVO","POL",20)
+replace nueva = subinstr(nueva,"DIDACTICO","DID",20)
+replace nueva = subinword(nueva,"CHICA","",20)
+replace nueva = subinstr(nueva,"CORPORALLIQUIDA","CORPORAL LIQ",20)
+replace nueva = subinstr(nueva,"LIQUIDA","LIQ",20)
+replace nueva = subinstr(nueva,"LIQUIDO","LIQ",20)
+replace nueva = subinword(nueva,"NATURAL","NAT",20)
+replace nueva = subinstr(nueva,"PLASTICO","PLAST",20)
+replace nueva = subinstr(nueva,"GRANDE","",20)
+replace nueva = subinword(nueva,"GDE","",20)
+replace nueva = subinstr(nueva,"ELECTRICA","ELECT",20)
+replace nueva = subinword(nueva,"BOTE","",20)
+replace nueva = subinstr(nueva,"DESHIDRATADA","DESHID",20)
+replace nueva = subinstr(nueva,"DESHIDRATADO","DESHID",20)
+replace nueva = subinstr(nueva,"FUJI FILM","FUJIFILM",20)
+replace nueva = subinstr(nueva,"FOTOGRAFICA","FOTO",20)
+replace nueva = subinstr(nueva,"INSTANTANEA","INST",20)
+replace nueva = subinstr(nueva,"INSTANTANEO","INST",20)
+replace nueva = subinstr(nueva,"VIDRIO","VID",20)
+replace nueva = subinword(nueva,"COLOR","",20)
+replace nueva = subinstr(nueva,"PICADOS","PIC",20)
+replace nueva = subinstr(nueva,"PICADO","PIC",20)
+replace nueva = subinstr(nueva,"AUTOMATICA","AUT",20)
+replace nueva = subinstr(nueva,"AUTOMATICO","AUT",20)
+replace nueva = subinstr(nueva,"PUERTAS","PTAS",20)
+replace nueva = subinstr(nueva,"CAMARA FOTO","CAM",20)
+replace nueva = subinstr(nueva,"CAMARA","CAM",20)
+replace nueva = subinstr(nueva,"SHAMPOO","CHAMPU",20)
+replace nueva = subinstr(nueva,"FORTIFICANTE","FORT",20)
+replace nueva = subinstr(nueva,"CUBICOS","",20)
+replace nueva = subinstr(nueva,"CUBICO","",20)
+replace nueva = subinstr(nueva," TIPO","",20)
+replace nueva = subinstr(nueva,"CJUG","JUG",20)
+replace nueva = subinstr(nueva,"JUGOS","JGO",20)
+replace nueva = subinstr(nueva,"JUGO","JGO",20)
+replace nueva = subinstr(nueva,"JUG","JGO",20)
+replace nueva = subinstr(nueva,"PHOT","HOT",20)
+replace nueva = subinstr(nueva,"HOT CAKES","HOTCAKES",20)
+replace nueva = subinstr(nueva,"COMPACTO","COMP",20)
+replace nueva = subinstr(nueva,"COMPACTA","COMP",20)
+replace nueva = subinword(nueva,"D","",20)
+replace nueva = subinstr(nueva,"ANTI HONGOS","ANTIHONGOS",20)
+replace nueva = subinstr(nueva,"PESTANAS","PEST",20)
+replace nueva = subinstr(nueva,"PESTANA","PEST",20)
+replace nueva = subinstr(nueva,"MIUSIC","MUSIC",20)
+replace nueva = subinstr(nueva,"VELADORAS","VEL",20)
+replace nueva = subinstr(nueva,"VELADORA","VEL",20)
+replace nueva = subinstr(nueva,"DURACION","DUR",20)
+replace nueva = subinstr(nueva,"DESECHABLES","DESECH",20)
+replace nueva = subinstr(nueva,"DESECHABLE","DESECH",20)
+replace nueva = subinstr(nueva,"POLIAMIDA","POL",20)
+replace nueva = subinstr(nueva,"PNINA","NINA",20)
+replace nueva = subinstr(nueva,"REFRESCO","",20)
+replace nueva = subinstr(nueva,"JELL O","JELLO",20)
+replace nueva = subinstr(nueva,"SOBER","SOBRE",20)
+replace nueva = subinstr(nueva,"PNINO","NINO",20)
+replace nueva = subinstr(nueva,"ESPECIAL","ESP",20)
+replace nueva = subinstr(nueva,"MATRIMONIALES","MAT",20)
+replace nueva = subinstr(nueva,"MATRIMONIAL","MAT",20)
+replace nueva = subinstr(nueva,"VISCOSA","VIS",20)
+replace nueva = subinstr(nueva,"ACRILICO","ACR",20)
+replace nueva = subinstr(nueva,"PAN DULCE","",20)
+replace nueva = subinstr(nueva,"ENTERAS","ENT",20)
+replace nueva = subinstr(nueva,"ENTEROS","ENT",20)
+replace nueva = subinstr(nueva,"ENTERA","ENT",20)
+replace nueva = subinstr(nueva,"ENTERO","ENT",20)
+replace nueva = subinstr(nueva,"CHOCOLATE","CHOC",20)
+replace nueva = subinstr(nueva,"REGULAR","REG",20)
+replace nueva = subinword(nueva,"G","GR",20)
+replace nueva = subinstr(nueva,"MC CORMICK","MCCORMICK",20)
+replace nueva = subinstr(nueva,"SUVE","SUAVE",20)
+replace nueva = subinstr(nueva,"SABORES","SAB",20)
+replace nueva = subinstr(nueva,"SABOR","SAB",20)
+replace nueva = subinstr(nueva,"NUTRI LECHE","NUTRI",20)
+replace nueva = subinstr(nueva,"NUTRILECHE","NUTRI",20)
+replace nueva = subinstr(nueva,"RECONSTITUIDA","RECON",20)
+replace nueva = subinstr(nueva,"RECONSTITUIDO","RECON",20)
+replace nueva = subinword(nueva,"CU","",20)
+replace nueva = subinstr(nueva,"CCAFEINA","CAF",20)
+replace nueva = subinstr(nueva,"SCAFEINA","DESCAF",20)
+replace nueva = subinstr(nueva,"DESCAFEINADO","DESCAF",20)
+replace nueva = subinstr(nueva,"SWEATER","SUETER",20)
+replace nueva = subinstr(nueva,"PADULTO","ADULTO",20)
+replace nueva = subinstr(nueva,"CORPORAL","CORP",20)
+replace nueva = subinstr(nueva,"PANTALETAS","PANTALETA",20)
+replace nueva = subinstr(nueva,"CLORALEX CLORO","CLORALEX",20)
+replace nueva = subinstr(nueva,"NUTRICION","NUT",20)
+replace nueva = subinstr(nueva,"INTENSIVO","INT",20)
+replace nueva = subinstr(nueva,"INTENSIVA","INT",20)
+replace nueva = subinstr(nueva,"PASTILLA","PZ",20)
+replace nueva = subinstr(nueva,"FACIALES","FAC",20)
+replace nueva = subinstr(nueva,"FACIAL","FAC",20)
+replace nueva = subinstr(nueva,"ULTRA GRIP","ULTRAGRIP",20)
+replace nueva = subinword(nueva,"MP","MARCA PROPIA",20)
+replace nueva = subinword(nueva,"GE","GENERAL ELECTRIC",20)
+replace nueva = subinstr(nueva,"RASTRILLO","",20)
+replace nueva = subinstr(nueva,"SERVILLETAS","SERV",20)
+replace nueva = subinstr(nueva,"SERVILLETA","SERV",20)
+replace nueva = subinstr(nueva,"CHAMARRA","CHAM",20)
+replace nueva = subinstr(nueva,"PAPAS FRITAS","",20)
+replace nueva = subinstr(nueva," ATUN EN","",20)
+replace nueva = subinstr(nueva," ATUN","",20)
+replace nueva = subinstr(nueva,"MAYONESA","",20)
+
+replace nueva = subinstr(nueva,"AIR WICK","AIRWICK,",20)
+replace nueva = subinword(nueva,"P","",20)
+replace nueva = subinword(nueva,"SM","SIN MARCA,",20)
+replace nueva = subinstr(nueva,"1,2,3","123,",20)
+replace nueva = subinstr(nueva,"1 2 3","123,",20)
+replace nueva = subinstr(nueva,"ENERGIZER","ENERGIZER,",20)
+replace nueva = subinstr(nueva,"3 CORONAS","3 CORONAS,",20)
+replace nueva = subinstr(nueva,"MCCORMICK","MCCORMICK,",20)
+replace nueva = subinstr(nueva,"RIDERS","RIDERS,",20)
+replace nueva = subinstr(nueva,"WHIRPOOL","WHIRPOOL,",20)
+replace nueva = subinstr(nueva,"HAVA CLUB","HAVA CLUB,",20)
+replace nueva = subinstr(nueva,"KOBLENZ","KOBLENZ,",20)
+replace nueva = subinstr(nueva,"HAGGAR","HAGGAR,",20)
+replace nueva = subinstr(nueva,"PONDS","PONDS,",20)
+replace nueva = subinstr(nueva,"DONA MARIA","DONA MARIA,",20)
+replace nueva = subinstr(nueva,"VOLTECH","VOLTECH,",20)
+replace nueva = subinstr(nueva,"LREAL","LOREAL,",20)
+replace nueva = subinstr(nueva,"DRENNE","DRENNE,",20)
+replace nueva = subinstr(nueva,"MILPA REAL","MILPA REAL,",20)
+replace nueva = subinstr(nueva,"PRESIDENTE","PRESIDENTE,",20)
+replace nueva = subinstr(nueva,"LA IDEAL","LA IDEAL,",20)
+replace nueva = subinstr(nueva,"US POLO","US POLO,",20)
+replace nueva = subinstr(nueva,"SEAMLESS","SEAMLESS,",20)
+replace nueva = subinstr(nueva,"SAHARA","SAHARA,",20)
+replace nueva = subinstr(nueva,"BIMBO","BIMBO,",20)
+replace nueva = subinstr(nueva,"ELEGANCE","ELEGANCE,",20)
+replace nueva = subinstr(nueva,"VIANNEY","VIANNEY,",20)
+replace nueva = subinstr(nueva,"CARTERS","CARTERS,",20)
+replace nueva = subinstr(nueva,"GRAFITO","GRAFITO,",20)
+replace nueva = subinstr(nueva,"ROYAL PRESTIGE","ROYAL PRESTIGE,",20)
+replace nueva = subinstr(nueva,"CINSA","CINSA,",20)
+replace nueva = subinstr(nueva,"ZOTE","ZOTE,",20)
+replace nueva = subinstr(nueva,"DGARI","DGARI,",20)
+replace nueva = subinstr(nueva,"YALE","YALE,",20)
+replace nueva = subinstr(nueva,"LEE","LEE,",20)
+replace nueva = subinstr(nueva,"LG","LG,",20)
+replace nueva = subinstr(nueva,"TRUPER","TRUPER,",20)
+replace nueva = subinstr(nueva,"GIANNI AND FERAUD","GIANNI AND FERAUD,",20)
+replace nueva = subinstr(nueva,"CARNATION","CARNATION,",20)
+replace nueva = subinstr(nueva,"CHUCHINS","CHUCHINS,",20)
+replace nueva = subinstr(nueva,"ADORABLE","ADORABLE,",20)
+replace nueva = subinstr(nueva,"OPTIMA","OPTIMA,",20)
+replace nueva = subinstr(nueva,"GIANELA","GIANELA,",20)
+replace nueva = subinstr(nueva,"TANG","TANG,",20)
+replace nueva = subinstr(nueva,"ZAGA","ZAGA,",20)
+replace nueva = subinstr(nueva,"CLAUDIA COLECTION","CLAUDIA COLECTION,",20)
+replace nueva = subinstr(nueva,"BUSH BEST","BUSH BEST,",20)
+replace nueva = subinstr(nueva,"LA COSTENA","LA COSTENA,",20)
+replace nueva = subinstr(nueva,"ZETS","ZETS,",20)
+replace nueva = subinstr(nueva,"EUFORIA","EUFORIA,",20)
+replace nueva = subinstr(nueva,"HERSHEYS","HERSHEYS,",20)
+replace nueva = subinstr(nueva,"CONTEMPO","CONTEMPO,",20)
+replace nueva = subinstr(nueva,"FOCA","FOCA,",20)
+replace nueva = subinstr(nueva,"PERICO","PERICO,",20)
+replace nueva = subinstr(nueva,"MISTY JEANS","MISTY JEANS,",20)
+replace nueva = subinstr(nueva,"KIMBERLY CLARK","KIMBERLY CLARK,",20)
+replace nueva = subinstr(nueva,"AXE","AXE,",20)
+replace nueva = subinstr(nueva,"CAMAY","CAMAY,",20)
+replace nueva = subinstr(nueva,"NESCAFE","NESCAFE,",20)
+replace nueva = subinstr(nueva,"DODYS","DODYS,",20)
+replace nueva = subinstr(nueva,"LOREAL","LOREAL,",20)
+replace nueva = subinstr(nueva,"DOVE","DOVE,",20)
+replace nueva = subinstr(nueva,"PERLA","PERLA,",20)
+replace nueva = subinstr(nueva,"OMEGA","OMEGA,",20)
+replace nueva = subinstr(nueva,"DISNEY","DISNEY,",20)
+replace nueva = subinstr(nueva,"BACARDI","BACARDI,",20)
+replace nueva = subinstr(nueva,"CLORALEX","CLORALEXM",20)
+replace nueva = subinstr(nueva,"VIANNEY","VIANNEY,",20)
+replace nueva = subinstr(nueva,"PHARAON","PHARAON,",20)
+replace nueva = subinstr(nueva,"DAROMA","DAROMA,",20)
+replace nueva = subinstr(nueva,"VICTORIA","VICTORIA,",20)
+replace nueva = subinstr(nueva,"CLORALEXM","CLORALEX,",20)
+replace nueva = subinstr(nueva,"CARIOCAS","CARIOCAS,",20)
+replace nueva = subinstr(nueva,"EL CONTINENTAL","EL CONTINENTAL",20)
+replace nueva = subinstr(nueva,"MAYBLLINE RIMEL LARGA DUR,","MAYBELLINE, RIMEL LARGA DUR",20)
+replace nueva = subinstr(nueva,"NESTLE","NESTLE,",20)
+replace nueva = subinstr(nueva,"OROWEAT","OROWEAT,",20)
+replace nueva = subinstr(nueva,"MARINELA","MARINELA,",20)
+replace nueva = subinstr(nueva,"FRAICHE","FRAICHE,",20)
+replace nueva = subinstr(nueva,"GERBER","GERBER,",20)
+replace nueva = subinstr(nueva,"CALVIN KLEIN","CALVIN KLEIN,",20)
+replace nueva = subinstr(nueva,"LADY SPEED STICK","LADY SPEED STICK,",20)
+replace nueva = subinstr(nueva,"LABELLO","LABELLO,",20)
+replace nueva = subinstr(nueva,"725 ORIGINALS","725 ORIGINALS,",20)
+replace nueva = subinstr(nueva,"VICTORIAS SECRET","VICTORIAS SECRET,",20)
+replace nueva = subinstr(nueva,"HUSH PUPPIES","HUSH PUPPIES,",20)
+replace nueva = subinstr(nueva,"CARLO ROSSETTI","CARLO ROSSETTI,",20)
+replace nueva = subinstr(nueva,"ANTHELIOS","ANTHELIOS,",20)
+replace nueva = subinstr(nueva,"0STER","OSTER,",20)
+replace nueva = subinword(nueva,"ACEITE","",20)
+replace nueva = subinstr(nueva,"COLG,ATE","COLGATE,",20)
+replace nueva = subinstr(nueva,"MP,","MARCA PROPIA,",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+replace nueva = subinstr(nueva,"","",20)
+
 
 replace nueva = ltrim(nueva)
 replace nueva = rtrim(nueva)
 replace nueva = itrim(nueva)
 
+gen temp = strpos(nueva,",")
+sort temp
+
+gen marca = substr(nueva,1,temp-1)
+drop if marca==""
+
+gen resto = substr(nueva,temp+1,.)
+drop if resto==""
+drop temp
+
+replace marca = subinstr(marca,",","",20)
+replace resto = subinstr(resto,",","",20)
+
+replace marca = ltrim(marca)
+replace marca = rtrim(marca)
+replace marca = itrim(marca)
+
+replace resto = ltrim(resto)
+replace resto = rtrim(resto)
+replace resto = itrim(resto)
+
+
+replace resto = subinword(resto,"BOTE","",20)
+replace resto = subinword(resto,"CHICA","",20)
+replace resto = subinword(resto,"COLOR","",20)
+replace resto = subinword(resto,"CU","",20)
+replace resto = subinword(resto,"D","",20)
+replace resto = subinword(resto,"DE","",20)
+replace resto = subinword(resto,"G","GR",20)
+replace resto = subinword(resto,"GDE","",20)
+replace resto = subinword(resto,"GE","GENERAL ELECTRIC",20)
+replace resto = subinword(resto,"HO","H",20)
+replace resto = subinword(resto,"HOJ","H",20)
+replace resto = subinword(resto,"HOJA","H",20)
+replace resto = subinword(resto,"HOJAS","H",20)
+replace resto = subinword(resto,"MP","MARCA PROPIA",20)
+replace resto = subinword(resto,"NATURAL","NAT",20)
+replace resto = subinword(resto,"PARA","",20)
+
+replace marca = subinword(marca,"BOTE","",20)
+replace marca = subinword(marca,"CHICA","",20)
+replace marca = subinword(marca,"COLOR","",20)
+replace marca = subinword(marca,"CU","",20)
+replace marca = subinword(marca,"D","",20)
+replace marca = subinword(marca,"DE","",20)
+replace marca = subinword(marca,"G","GR",20)
+replace marca = subinword(marca,"GDE","",20)
+replace marca = subinword(marca,"GE","GENERAL ELECTRIC",20)
+replace marca = subinword(marca,"HO","H",20)
+replace marca = subinword(marca,"HOJ","H",20)
+replace marca = subinword(marca,"HOJA","H",20)
+replace marca = subinword(marca,"HOJAS","H",20)
+replace marca = subinword(marca,"MP","MARCA PROPIA",20)
+replace marca = subinword(marca,"NATURAL","NAT",20)
+replace marca = subinword(marca,"PARA","",20)
+
+replace marca = ltrim(marca)
+replace marca = rtrim(marca)
+replace marca = itrim(marca)
+
+replace resto = ltrim(resto)
+replace resto = rtrim(resto)
+replace resto = itrim(resto)
+
 * WE FIX 2 THINGS HERE:
 * 1) Exact same product followed in city the same time (therefore we would average these)
 * 2) Falsely separated (unchained) through time but its actually the same product
 preserve
-collapse (min) min_date (max) max_date (sum) count_price, by(city generic nueva)
+collapse (min) min_date (max) max_date (sum) count_price, by(city generic marca resto)
 gen perro = max_date-min_date+1
 gen dif = count_price-perro
 keep if dif>=-2
@@ -498,9 +846,11 @@ restore
 
 * WATCH OUT. GENERIC ID MIGHT BE DIFFERENT AMONG SAME GENERICS!
 
-merge m:1 city generic nueva using "$raw\fix.dta", update replace
-duplicates drop city generic nueva if _merge!=1, force
-drop _merge
+merge m:1 city generic marca resto using "$raw\fix.dta", update replace
+duplicates tag city generic marca resto, gen(dup)
+drop if _merge!=1 & dup>0
+drop _merge dup
+
 * PIERDE SENTIDO EL ID
 * SOLO LO MANTENGO PARA ID de RECLINK
 
@@ -512,25 +862,148 @@ drop _merge
 *sort count_price
 keep if count_price>=12
 
+gsort - count_price
+duplicates drop city generic marca resto, force
 compress
 save "$raw\pseudoclean.dta", replace
-
-
 
 
 forvalues i = 1/55 {
 	clear all
 	use "$raw\pseudoclean.dta"
-	keep idcity generic min_date max_date nueva count_price idcitsubcgenconsectime
+	keep idcity generic min_date max_date nueva marca resto count_price idcitsubcgenconsectime
 	keep if idcity==`i'
 	rename idcitsubcgenconsectime idcitsubcgenconsectime`i'
 	rename count_price count_price`i'
 	rename idcity idcity`i'
 	rename min_date min_date`i'
 	rename max_date max_date`i'
+	rename nueva nueva`i'
 	compress
 	save "$raw\\`i'.dta", replace
 }
+
+
+* BEST APPROACH
+clear all
+use "$raw\1.dta"
+
+forvalues j = 2/55 {
+	reclink2 generic marca resto using "$raw\\`j'.dta", idmaster(idcitsubcgenconsectime1) idusing(idcitsubcgenconsectime`j') gen(match`j') wmatch(1 19 14) orblock(generic) required(generic) _merge(merge`j') minscore(0.8) minbigram(1)
+	rename generic tempgeneric
+	rename marca tempmarca
+	rename resto tempresto
+	rename Ugeneric generic
+	rename Umarca marca
+	rename Uresto resto
+	merge m:1 generic marca resto max_date`j' min_date`j' using "$raw\\`j'.dta", gen(presence`j')
+	rename generic generic`j'
+	rename marca marca`j'
+	rename resto resto`j'
+	rename tempgeneric generic
+	rename tempmarca marca
+	rename tempresto resto
+	gsort - match`j'
+	duplicates drop idcitsubcgenconsectime1 if idcitsubcgenconsectime1!=., force
+	replace idcitsubcgenconsectime1=idcitsubcgenconsectime`j' if idcitsubcgenconsectime1==.
+	replace generic = generic`j' if presence`j'==2
+	replace marca = marca`j' if presence`j'==2
+	replace resto = resto`j' if presence`j'==2
+}
+compress
+
+replace marca="" if max_date1==.
+replace resto="" if max_date1==.
+replace generic="" if max_date1==.
+replace idcitsubcgenconsectime1=. if max_date1==.
+
+save "$raw\thebest.dta", replace
+
+
+clear all
+use "$raw\thebest.dta"
+egen num_cities = rownonmiss(generic*), strok
+gsort - num_cities
+keep if num_cities>=20
+
+keep nueva*
+rename nueva nueva1
+
+gen prod=_n
+reshape long nueva, i(prod) j(city)
+
+collapse (count) city ,by(nueva)
+gsort - city
+
+
+
+
+
+
+*********** PROOF OF STAKE
+clear all
+use "$raw\1.dta"
+
+
+reclink2 generic marca resto using "$raw\2.dta", idmaster(idcitsubcgenconsectime1) idusing(idcitsubcgenconsectime2) gen(match2) wmatch(1 19 14) orblock(generic) required(generic) _merge(merge2) minscore(0.8) minbigram(1)
+rename generic tempgeneric
+rename marca tempmarca
+rename resto tempresto
+rename Ugeneric generic
+rename Umarca marca
+rename Uresto resto
+merge m:1 generic marca resto max_date2 min_date2 using "$raw\2.dta", gen(presence2)
+rename generic generic2
+rename marca marca2
+rename resto resto2
+rename tempgeneric generic
+rename tempmarca marca
+rename tempresto resto
+gsort - match2
+duplicates drop idcitsubcgenconsectime1 if idcitsubcgenconsectime1!=., force
+replace idcitsubcgenconsectime1=idcitsubcgenconsectime2 if idcitsubcgenconsectime1==.
+replace generic = generic2 if presence2==2
+replace marca = marca2 if presence2==2
+replace resto = resto2 if presence2==2
+
+
+replace marca="" if max_date1==.
+replace resto="" if max_date1==.
+replace generic="" if max_date1==.
+replace idcitsubcgenconsectime1=. if max_date1==.
+
+sort match2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ************ SUPER HARD
 
@@ -539,14 +1012,13 @@ use "$raw\1.dta"
 
 forvalues j = 2/55 {
 	reclink2 generic nueva using "$raw\\`j'.dta", idmaster(idcitsubcgenconsectime1) idusing(idcitsubcgenconsectime`j') gen(match`j') wmatch(1 20) orblock(generic) required(generic) _merge(merge`j') minscore(0.7) minbigram(1)
-	compress
 	rename Ugeneric generic`j'
 	rename Unueva nueva`j'
 	strdist nueva nueva`j', g(lev`j')
 	gsort lev`j'
 	duplicates drop idcitsubcgenconsectime1, force
 }
-
+compress
 save "$raw\total_join_uhard2.dta", replace
 
 
