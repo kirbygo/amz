@@ -1582,7 +1582,6 @@ export excel using "$raw\VF_prod_simple.xls", firstrow(variables) replace
 
 
 
-
 clear all
 use "$raw\VF_tot.dta"
 keep idproduct generic description
@@ -1593,24 +1592,27 @@ export excel using "$raw\VF_prod_complete.xls", firstrow(variables) replace
 
 
 
+clear all
+use "$raw\VF_tot.dta"
+keep generic pond
+duplicates drop
+gsort - pond
+
+export excel using "$raw\INPC_weight.xls", firstrow(variables) replace
 
 
 
+clear all
+use "$raw\VF_tot.dta"
 
+bysort idprod: histogram date, d
 
+h histogram
 
+*separate price, by(idproduct)
+*tw sc price1 price10 price11 price12 price13 price14 price15 price19 price20  date, ms(Oh..)
 
-
-
-
-
-
-
-
-
-
-
-
+tw sc price date
 
 
 
